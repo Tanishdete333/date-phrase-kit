@@ -33,5 +33,181 @@
     "today": "2026-12-31",
     "expected": "2026-12-31",
     "category": "end_of_month"
+  },
+  {
+    "id": "timeofday-01",
+    "phrase": "by EOD",
+    "today": "2026-11-17",
+    "expected": "2026-11-17",
+    "category": "time_of_day"
+  },
+  {
+    "id": "timeofday-02",
+    "phrase": "tomorrow morning",
+    "today": "2026-11-17",
+    "expected": "2026-11-18",
+    "category": "time_of_day"
+  },
+  {
+    "id": "ambiguous-01",
+    "phrase": "sometime next week",
+    "today": "2026-11-17",
+    "expected": null,
+    "category": "ambiguous"
+  },
+  {
+    "id": "thisweek-02",
+    "phrase": "by the end of this week",
+    "today": "2027-03-08",
+    "expected": "2027-03-12",
+    "category": "this_week"
+  },
+  {
+    "id": "thisweek-03",
+    "phrase": "before this week's end",
+    "today": "2028-02-16",
+    "expected": "2028-02-18",
+    "category": "this_week"
+  },
+  {
+    "id": "thisweek-04",
+    "phrase": "this Friday",
+    "today": "2027-06-14",
+    "expected": "2027-06-18",
+    "category": "this_week"
+  },
+  {
+    "id": "nextweek-02",
+    "phrase": "by the end of next week",
+    "today": "2026-12-25",
+    "expected": "2027-01-01",
+    "category": "next_week"
+  },
+  {
+    "id": "nextweek-03",
+    "phrase": "next week's Friday",
+    "today": "2027-06-12",
+    "expected": "2027-06-18",
+    "category": "next_week"
+  },
+  {
+    "id": "nextweek-04",
+    "phrase": "before next week's end",
+    "today": "2028-02-28",
+    "expected": "2028-03-10",
+    "category": "next_week"
+  },
+  {
+    "id": "weekday-02",
+    "phrase": "on Friday",
+    "today": "2027-05-14",
+    "expected": null,
+    "category": "weekday"
+  },
+  {
+    "id": "weekday-03",
+    "phrase": "on Monday",
+    "today": "2027-05-15",
+    "expected": "2027-05-17",
+    "category": "weekday"
+  },
+  {
+    "id": "weekday-04",
+    "phrase": "this Wednesday",
+    "today": "2026-12-28",
+    "expected": "2026-12-30",
+    "category": "weekday"
+  },
+  {
+    "id": "weekday-05",
+    "phrase": "next Tuesday",
+    "today": "2028-02-27",
+    "expected": "2028-02-29",
+    "acceptable": ["2028-03-07"],
+    "category": "weekday"
+  },
+  {
+    "id": "duration-02",
+    "phrase": "in 3 days",
+    "today": "2027-12-31",
+    "expected": "2028-01-03",
+    "category": "duration"
+  },
+  {
+    "id": "duration-03",
+    "phrase": "in 10 days",
+    "today": "2028-02-21",
+    "expected": "2028-03-02",
+    "category": "duration"
+  },
+  {
+    "id": "duration-04",
+    "phrase": "one week from today",
+    "today": "2026-08-30",
+    "expected": "2026-09-06",
+    "category": "duration"
+  },
+  {
+    "id": "duration-05",
+    "phrase": "in five days",
+    "today": "2026-12-30",
+    "expected": "2027-01-04",
+    "category": "duration"
+  },
+  {
+    "id": "endmonth-02",
+    "phrase": "by the last day of February",
+    "today": "2027-02-10",
+    "expected": "2027-02-28",
+    "category": "end_of_month"
+  },
+  {
+    "id": "endmonth-03",
+    "phrase": "by the end of January",
+    "today": "2028-01-29",
+    "expected": "2028-01-31",
+    "category": "end_of_month"
+  },
+  {
+    "id": "endmonth-04",
+    "phrase": "on the final day of April",
+    "today": "2026-04-30",
+    "expected": "2026-04-30",
+    "category": "end_of_month"
+  },
+  {
+    "id": "timeofday-03",
+    "phrase": "by 5 PM",
+    "today": "2027-07-31",
+    "expected": "2027-07-31",
+    "category": "time_of_day"
+  },
+  {
+    "id": "ambiguous-02",
+    "phrase": "later this week",
+    "today": "2027-03-08",
+    "expected": null,
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambiguous-03",
+    "phrase": "next weekend",
+    "today": "2027-06-12",
+    "expected": null,
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambiguous-04",
+    "phrase": "early next month",
+    "today": "2028-02-28",
+    "expected": null,
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambiguous-05",
+    "phrase": "as soon as possible",
+    "today": "2027-07-31",
+    "expected": null,
+    "category": "ambiguous"
   }
 ]
