@@ -12,6 +12,26 @@
     "today": "2026-11-17",
     "expected": "2026-11-27",
     "category": "next_week"
-
+  },
+  {
+    "id": "weekday-01",
+    "phrase": "on Wednesday",
+    "today": "2026-11-16",
+    "expected": "2026-11-18",
+    "category": "weekday"
+  },
+  {
+    "id": "duration-01",
+    "phrase": "in 2 weeks",
+    "today": "2026-11-20",
+    "expected": "2026-12-04",
+    "category": "duration"
+  },
+  {
+    "id": "endmonth-01",
+    "phrase": "end of the month",
+    "today": "2026-12-31",
+    "expected": "2026-12-31",
+    "category": "end_of_month"
   }
 ]
