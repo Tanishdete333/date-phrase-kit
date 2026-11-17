@@ -1,0 +1,17 @@
+[
+  {
+    "id": "thisweek-01",
+    "phrase": "end of this week",
+    "today": "2026-11-17",
+    "expected": "2026-11-20",
+    "category": "this_week"
+  },
+  {
+    "id": "nextweek-01",
+    "phrase": "end of next week",
+    "today": "2026-11-17",
+    "expected": "2026-11-27",
+    "category": "next_week"
+
+  }
+]
