@@ -72,3 +72,33 @@ export function resolveDuration(phrase, today) {
 
   return formatDate(result);
 }
+
+export function resolveWeekEnd(phrase, today) {
+  const normalizedPhrase = phrase.toLowerCase().trim();
+
+  const match = normalizedPhrase.match(/^end of (this|next) week$/);
+
+  if (!match) {
+    return null;
+  }
+
+  const weekType = match[1];
+
+  let day = today.getUTCDay();
+
+  if (day === 0) {
+    day = 7;
+  }
+
+  const daysToFriday = 5 - day;
+
+  if (weekType === "this" && daysToFriday < 0) {
+    return null;
+  }
+
+  const totalDays = daysToFriday + (weekType === "next" ? 7 : 0);
+
+  const result = addDays(today, totalDays);
+
+  return formatDate(result);
+}
