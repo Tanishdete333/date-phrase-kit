@@ -72,7 +72,77 @@ export function resolveDuration(phrase, today) {
 
   return formatDate(result);
 }
+const weekdays = {
+  sunday: 0,
+  monday: 1,
+  tuesday: 2,
+  wednesday: 3,
+  thursday: 4,
+  friday: 5,
+  saturday: 6
+};
+function getWeekdayFromPhrase(phrase) {
+  const match = phrase.match(
+    /^(?:on|next|this) (sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/
+  );
 
+  if (!match) {
+    return null;
+  }
+
+  return weekdays[match[1]];
+}
+
+export function resolveWeekday(phrase, today) {
+  const normalizedPhrase = phrase.toLowerCase().trim();
+
+  const match = normalizedPhrase.match(
+    /^(on|next|this) (sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  const prefix = match[1];
+
+  let targetDay = weekdays[match[2]];
+  let currentDay = today.getUTCDay();
+
+  if (targetDay === 0) {
+    targetDay = 7;
+  }
+
+  if (currentDay === 0) {
+    currentDay = 7;
+  }
+
+  let daysToAdd = targetDay - currentDay;
+
+  if (prefix === "on") {
+    if (daysToAdd === 0) {
+      return null;
+    }
+
+    if (daysToAdd < 0) {
+      daysToAdd += 7;
+    }
+  }
+
+  if (prefix === "this") {
+    if (daysToAdd < 0) {
+      return null;
+    }
+  }
+
+  if (prefix === "next") {
+    daysToAdd += 7;
+  }
+
+  const result = addDays(today, daysToAdd);
+
+  return formatDate(result);
+}
 export function resolveWeekEnd(phrase, today) {
   const normalizedPhrase = phrase.toLowerCase().trim();
 
