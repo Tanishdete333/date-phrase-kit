@@ -48,7 +48,15 @@ function toNumber(text) {
 export function resolveDuration(phrase, today) {
   const normalizedPhrase = phrase.toLowerCase().trim();
 
-  const match = normalizedPhrase.match(/^in (\w+) (day|week)s?$/);
+  const fromTodayMatch = normalizedPhrase.match(
+    /^(\w+) (day|week)s? from today$/
+  );
+
+  const regularMatch = normalizedPhrase.match(
+    /^in (\w+) (day|week)s?$/
+  );
+
+  const match = fromTodayMatch || regularMatch;
 
   if (!match) {
     return null;
@@ -97,16 +105,17 @@ export function resolveWeekday(phrase, today) {
   const normalizedPhrase = phrase.toLowerCase().trim();
 
   const match = normalizedPhrase.match(
-    /^(on|next|this) (sunday|monday|tuesday|wednesday|thursday|friday|saturday)$/
+    /^(?:(on|next|this) (sunday|monday|tuesday|wednesday|thursday|friday|saturday)|next week's (sunday|monday|tuesday|wednesday|thursday|friday|saturday))$/
   );
 
   if (!match) {
     return null;
   }
 
-  const prefix = match[1];
+  const prefix = match[1] || "next";
+  const weekdayName = match[2] || match[3];
 
-  let targetDay = weekdays[match[2]];
+  let targetDay = weekdays[weekdayName];
   let currentDay = today.getUTCDay();
 
   if (targetDay === 0) {
@@ -146,7 +155,9 @@ export function resolveWeekday(phrase, today) {
 export function resolveWeekEnd(phrase, today) {
   const normalizedPhrase = phrase.toLowerCase().trim();
 
-  const match = normalizedPhrase.match(/^end of (this|next) week$/);
+  const match = normalizedPhrase.match(
+    /^(?:end of |(?:by|before) the end of |before )(this|next)(?: week| week's end)$/
+  );
 
   if (!match) {
     return null;
@@ -171,4 +182,83 @@ export function resolveWeekEnd(phrase, today) {
   const result = addDays(today, totalDays);
 
   return formatDate(result);
+}
+export function resolve(phrase, today, options = {}) {
+  const parsedToday = parseDate(today);
+
+  const rules = [
+    resolveDuration,
+    resolveWeekEnd,
+    resolveWeekday,
+    resolveEndOfMonth,
+    resolveTimeOfDay
+  ];
+
+  for (const rule of rules) {
+    const result = rule(phrase, parsedToday, options);
+
+    if (result !== null) {
+      return result;
+    }
+  }
+
+  return null;
+}
+export function resolveEndOfMonth(phrase, today) {
+  const normalizedPhrase = phrase.toLowerCase().trim();
+
+  const match = normalizedPhrase.match(
+    /^(?:end of (?:the )?month|by the (?:last day|end) of (january|february|march|april|may|june|july|august|september|october|november|december)|on the final day of (january|february|march|april|may|june|july|august|september|october|november|december))$/
+  );
+
+  if (!match) {
+    return null;
+  }
+
+  if (
+  normalizedPhrase === "end of the month" ||
+  normalizedPhrase === "end of month"
+) {
+    const lastDay = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 0)
+    );
+
+    return formatDate(lastDay);
+  }
+
+  const monthNames = [
+    "january", "february", "march", "april",
+    "may", "june", "july", "august",
+    "september", "october", "november", "december"
+  ];
+
+  const monthName = match[1] || match[2];
+  const monthIndex = monthNames.indexOf(monthName);
+
+  let year = today.getUTCFullYear();
+
+  if (monthIndex < today.getUTCMonth()) {
+    year++;
+  }
+
+  const lastDay = new Date(Date.UTC(year, monthIndex + 1, 0));
+
+  return formatDate(lastDay);
+}
+export function resolveTimeOfDay(phrase, today) {
+  const normalizedPhrase = phrase.toLowerCase().trim();
+
+  if (normalizedPhrase === "by eod") {
+    return formatDate(today);
+  }
+
+  if (/^by \d{1,2} ?(?:am|pm)$/.test(normalizedPhrase)) {
+    return formatDate(today);
+  }
+
+  if (normalizedPhrase === "tomorrow morning") {
+    return formatDate(addDays(today, 1));
+  }
+
+  return null;
 }
