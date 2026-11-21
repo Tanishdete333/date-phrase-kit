@@ -1,4 +1,3 @@
-
 import test from "node:test";
 import assert from "node:assert/strict";
 import { resolve } from "../src/resolver.js";
@@ -17,14 +16,28 @@ test("unknown phrase returns null", () => {
   );
 });
 
-test("Friday today resolves correctly", () => {
+test('"on Friday" on a Friday returns null', () => {
   assert.equal(
     resolve("on Friday", "2026-11-20"),
     null
   );
 });
 
+test('"end of this week" on Friday returns the same day', () => {
+  assert.equal(
+    resolve("end of this week", "2026-11-20"),
+    "2026-11-20"
+  );
+});
+
 test("end of month on the 31st resolves correctly", () => {
+  assert.equal(
+    resolve("end of month", "2026-12-31"),
+    "2026-12-31"
+  );
+});
+
+test("end of month on the 15th resolves correctly", () => {
   assert.equal(
     resolve("end of month", "2026-12-15"),
     "2026-12-31"
