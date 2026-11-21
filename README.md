@@ -51,6 +51,8 @@ The resolver follows these conventions:
 - **Weekend examples:** On Saturday, 21 November 2026, "end of this week" returns `null`, while "end of next week" returns `2026-11-27`.
 - **Ambiguous or unsupported phrases:** `expected: null` means the dataset expects the resolver to refuse to guess rather than return a date.
 - **End of the month:** Resolves to the last calendar day of the current month. If today is already the last day, it returns today's date.
+- Multiple consecutive spaces inside a phrase are not normalized. For example, `"end  of  next  week"` returns `null`.
+- The time-of-day pattern accepts invalid-looking values such as `"by 99 pm"` and returns today's date. Time values are not validated.
 
 For example, under this project's convention, "end of next week" on Tuesday, 17 November 2026 resolves to Friday, 27 November 2026. This is a documented interpretation, not a claim that every product or person uses the same interpretation.
 
